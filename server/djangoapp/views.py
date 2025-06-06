@@ -121,7 +121,7 @@ def get_dealer_reviews(request, dealer_id):
             response = analyze_review_sentiments(review_detail["review"])
             print("Sentiment analysis response:", response)
             if response and isinstance(response, dict) and \
-                "sentiment" in response:
+                    "sentiment" in response:
                 review_detail["sentiment"] = response["sentiment"]
             else:
                 review_detail["sentiment"] = "unknown"
@@ -144,12 +144,12 @@ def add_review(request):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status": 200, 
-                                 "message": response.get("message", "Review submitted")})
+            return JsonResponse({"status": 200,
+                                 "message": response.get("message",
+                                                         "Review submitted")})
         except Exception as e:
             return JsonResponse({"status": 401,
                                  "message": f"Error in posting review: {e}"})
-
 
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
