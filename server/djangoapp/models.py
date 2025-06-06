@@ -4,13 +4,7 @@ from django.db import models
 from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
 # Create your models here.
-
-from django.db import models
-from django.utils.timezone import now
-from django.core.validators import MaxValueValidator, MinValueValidator
-
 
 # CarMake model
 class CarMake(models.Model):
@@ -19,7 +13,6 @@ class CarMake(models.Model):
 
     def __str__(self):
         return self.name  # Return the name as the string representation
-
 
 class CarModel(models.Model):
     car_make = models.ForeignKey(
