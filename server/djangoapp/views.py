@@ -1,6 +1,6 @@
 # Uncomment the required imports before adding the code
 
-from django.shortcuts import render
+# from django.shortcuts import render
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 # from django.shortcuts import get_object_or_404, render, redirect
@@ -81,7 +81,7 @@ def registration(request):
         username_exist = True
     except Exception as e:
         # If not, simply log this is a new user
-        logger.debug("{e} is new user".format(username))
+        logger.debug(f"{username} is new user (Exception: {e})")
 
     # If it is a new user
     if not username_exist:
@@ -102,7 +102,7 @@ def registration(request):
         return JsonResponse(data)
 
 
-# Update the `get_dealerships` render list of dealerships all by default, 
+# Update the `get_dealerships` render list of dealerships all by default,
 # particular state if state is passed
 def get_dealerships(request, state="All"):
     if state == "All":
@@ -121,7 +121,7 @@ def get_dealer_reviews(request, dealer_id):
             response = analyze_review_sentiments(review_detail["review"])
             print("Sentiment analysis response:", response)
             if response and isinstance(response, dict) and \
-            "sentiment" in response:
+                "sentiment" in response:
                 review_detail["sentiment"] = response["sentiment"]
             else:
                 review_detail["sentiment"] = "unknown"
@@ -144,10 +144,12 @@ def add_review(request):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status": 200, "message": response.get("message", "Review submitted")})
+            return JsonResponse({"status": 200, 
+                                 "message": response.get("message", "Review submitted")})
         except Exception as e:
             return JsonResponse({"status": 401,
-                                 "message": "Error in posting review && {e}"})
-            
+                                 "message": f"Error in posting review: {e}"})
+
+
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
