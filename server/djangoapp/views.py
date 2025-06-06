@@ -120,8 +120,8 @@ def get_dealer_reviews(request, dealer_id):
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail["review"])
             print("Sentiment analysis response:", response)
-            if response and isinstance(response, dict) 
-            and "sentiment" in response:
+            if response and isinstance(response, dict) and \
+            "sentiment" in response:
                 review_detail["sentiment"] = response["sentiment"]
             else:
                 review_detail["sentiment"] = "unknown"
